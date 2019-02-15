@@ -5,7 +5,7 @@ var to = require('../../configs/to');
 var s = require("underscore.string");
 require('../save');
 
-exports.generate = function(pathsql, folder_models, folder_controllers, folder_views) {
+exports.generate = function(pathsql, folder_api) {
 	this.createModels(pathsql, function(err, Models) {
 		//console.log(JSON.stringify(Models, null, 2));
 		if (folder_views !== "" && folder_views) {
