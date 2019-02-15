@@ -10,8 +10,8 @@ var compiler_mg = require('./generator/mongodb/compiler_mongo');
  * @param  {string} folder_views        [dir folder views]
  * @return {void}                       [none]
  */
-exports.generatepg = function (config, folder_models, folder_controllers, folder_views) {
-	compiler_pg.generate(config, folder_models, folder_controllers, folder_views);
+exports.generatepg = function (config, folder_api) {
+	compiler_pg.generate(config, folder_api);
 };
 
 /**
@@ -22,8 +22,8 @@ exports.generatepg = function (config, folder_models, folder_controllers, folder
  * @param  {string} folder_views 					[dir folder views]
  * @return {[void]}                    			[none]
  */
-exports.generatemy = function (config, folder_models, folder_controllers, folder_views) {
-	compiler_my.generate(config, folder_models, folder_controllers, folder_views);
+exports.generatemy = function (config, folder_api) {
+	compiler_my.generate(config, folder_api);
 };
 
 /**
@@ -36,6 +36,6 @@ exports.generatemy = function (config, folder_models, folder_controllers, folder
  * @param  {string} folder_controllers [description]
  * @return {[none]}                    [description]
  */
-exports.generatemg = function (host, port, database, folder_views, folder_models, folder_controllers) {
-	compiler_mg.generate(host, port, database, folder_views, folder_models, folder_controllers);
+exports.generatemg = function (host, port, database, folder_api) {
+	compiler_mg.generate(host, port, database, folder_api);
 };

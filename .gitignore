@@ -43,3 +43,4 @@ yarn.lock
 controllers/
 models/
 views/
+generatedapi

@@ -101,9 +101,10 @@ if (g) {
     db,                   // Option name database
     host,                 // Option host database
     port,                 // Option port database
-    folder_models,        // Option path folder models 
+    folder_models,        // Option path folder models
     folder_controllers,   // Option path folder controllers
     folder_views,         // Option path folder views
+	folder_api,				//Output folder for api
     schema,               // Option schema database => postgres
     type,                 // Option type gestor database: mysql, postgres, mongodb
     filesql;              // Option path file .sql
@@ -119,7 +120,7 @@ if (g) {
   if (pass === true) {
     pass = undefined;
     console.warn("Missing password database");
-    process.exit(1);    
+    process.exit(1);
   } else if (pass) {
     pass = pass.toString();
   }
@@ -160,11 +161,11 @@ if (g) {
     folder_controllers = concat(process.cwd(), "controllers"); // Method concat: see configs/route.js
   }
 
-  //Folder views
-  folder_views = cli.flags.v || cli.flags.views;
-  if (folder_views === true || folder_views == "true") {
-    folder_views = concat(process.cwd(), "views"); // Method concat: see configs/route.js
-  }
+	//Folder api
+	folder_api = cli.flags.o || cli.flags.output;
+	if (folder_api === true || folder_api == "true") {
+		folder_api = concat(process.cwd(), "generatedapi"); // Method concat: see configs/route.js
+	}
 
   //file .sql
   filesql = cli.flags.f || cli.flags.file;
@@ -186,7 +187,7 @@ if (g) {
   if (filesql) {
     exitsfile(filesql, function (exits) {
       if (exits) {
-        generate_my_transpile.generate(filesql, folder_models, folder_controllers, folder_views);
+        generate_my_transpile.generate(filesql, folder_api);
       } else {
         console.log(color("\nERROR: No exits '" + filesql + "'. \nEnter 'sails-inverse-model --help'", "red"));
       }
@@ -197,14 +198,14 @@ if (g) {
 
       if (type.indexOf("pg") != -1 || type.indexOf("postgres") != -1) { //pg, postgres
         config.port = 5432;
-        generate_pg.generate(config, folder_models, folder_controllers, folder_views);
+        generate_pg.generate(config, folder_api);
       } else if (type.indexOf("my") != -1 || type.indexOf("mysql") != -1) { //my, mysql
         delete config.schema;
-        generate_my.generate(config, folder_models, folder_controllers, folder_views);
+        generate_my.generate(config, folder_api);
       } else if (type.indexOf("mg") != -1 || type.indexOf("mongo") != -1) {
         //mg, mongo
         generate_mg
-          .generate(config.host, 27017, config.database, folder_views, folder_models, folder_controllers)
+          .generate(config.host, 27017, config.database, folder_api)
           .then((value) => {
             console.log(color("[OK]", "green") + " Mongo");
           }, (err) => {
